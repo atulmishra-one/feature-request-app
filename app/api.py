@@ -17,7 +17,7 @@ from datetime import datetime
 api_views = Blueprint('api', __name__, url_prefix='/api')
 
 
-@api_views.route('/api/list_features', methods=['GET', ])
+@api_views.route('list_features', methods=['GET', ])
 def list_features():
     features = Feature.query.order_by(Feature.id.desc()).all()
     results = [
@@ -35,7 +35,7 @@ def list_features():
     return jsonify(results)
 
 
-@api_views.route('/api/request_new_feature', methods=['POST', ])
+@api_views.route('request_new_feature', methods=['POST', ])
 def request_new_feature():
     data = request.get_json()
     if data is None:
@@ -68,7 +68,7 @@ def request_new_feature():
     return jsonify(message="Feature was created successfully")
 
 
-@api_views.route('/api/client_values', methods=['GET', ])
+@api_views.route('client_values', methods=['GET', ])
 def client_values():
     results = [
         {"name": "Client A", "id": "A"},
@@ -78,7 +78,7 @@ def client_values():
     return jsonify(results)
 
 
-@api_views.route('/api/areas_values', methods=['GET', ])
+@api_views.route('areas_values', methods=['GET', ])
 def areas_values():
     results = [
         {"name": "Policies", "id": "Policies"},
@@ -89,7 +89,7 @@ def areas_values():
     return jsonify(results)
 
 
-@api_views.route('/api/delete_feature', methods=['DELETE', ])
+@api_views.route('delete_feature', methods=['DELETE', ])
 def delete_feature():
     data = request.get_json()
     if data is None:
