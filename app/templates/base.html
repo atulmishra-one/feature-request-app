@@ -6,11 +6,18 @@
     <title>Feature Request App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 </head>
 <body>
 {% include "_nav.html" %}
+
+<main role="main" class="container mt-5">
+    {% block content %} {% endblock %}
+</main>
+
+{% include "_footer.html" %}
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <!-- BootStrap JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -20,6 +27,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"
          crossorigin="anonymous"></script>
 <!-- Optional JS -->
-
+<script src="{{url_for('static', filename='js/validate.js')}}"></script>
+<script src="{{url_for('static', filename='js/app.js')}}"></script>
 </body>
 </html>

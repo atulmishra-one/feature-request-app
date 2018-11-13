@@ -1,1 +1,29 @@
 {% extends "base.html" %}
+{% block content %}
+    <div class="row mt-5 mb-5 mx-auto">
+        <div class="col-sm-12 mt-5">
+            <a class="btn btn-primary" href="{{ url_for('views.request_feature') }}">Add a New Feature</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                          <th scope="col">Title</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Client</th>
+                          <th scope="col">Priority</th>
+                          <th scope="col">Target Date</th>
+                          <th scope="col">Product Area</th>
+                          <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="feature_content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
