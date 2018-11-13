@@ -1,3 +1,8 @@
+""""App views
+This views serves all the static pages of the feature app
+
+"""
+
 from flask import Blueprint
 from flask import render_template
 from flask import jsonify

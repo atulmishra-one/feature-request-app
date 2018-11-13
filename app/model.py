@@ -15,13 +15,15 @@ class Feature(db.Model):
 
     @staticmethod
     def reorder_priority(priority, client):
-        priority_to_update = priority
-        features_to_update_count = Feature.query.filter_by(client=client, priority=priority_to_update).count()
+        """"
+        Check the client priority count and re-order all the feature requests.
+        """
+        features_to_update_count = Feature.query.filter_by(client=client, priority=priority).count()
         while features_to_update_count > 1:
-            feature_to_update = Feature.query.filter_by(client=client, priority=priority_to_update) \
+            feature_to_update = Feature.query.filter_by(client=client, priority=priority) \
                 .order_by('id').first()
-            feature_to_update.priority = feature_to_update.priority + 1
-            priority_to_update = priority_to_update + 1
-            features_to_update_count = Feature.query.filter_by(client=client, priority=priority_to_update) \
+            feature_to_update.priority += feature_to_update.priority
+            priority += priority
+            features_to_update_count = Feature.query.filter_by(client=client, priority=priority) \
                 .count()
 
