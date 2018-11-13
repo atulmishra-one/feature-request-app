@@ -1,1 +1,1 @@
-heroku run python run.py
+web gunicorn run:application
