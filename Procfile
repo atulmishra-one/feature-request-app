@@ -1,0 +1,1 @@
+heroku run python run.py
