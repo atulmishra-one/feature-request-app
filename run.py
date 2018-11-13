@@ -1,6 +1,6 @@
-from app.main import create_request_app
+from app.main import create_request_app as application
 from app import config
 
 if __name__ == '__main__':
-    app = create_request_app(config)
-    app.run()
+    application = application(config)
+    application.run()
