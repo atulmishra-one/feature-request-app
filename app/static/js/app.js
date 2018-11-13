@@ -39,7 +39,6 @@ function featureAppModel(){
     });
 
     $.getJSON('/api/list_features', function(results){
-          console.log(results.length);
           var table = '';
           if( results.length > 0 ){
             for(i=0; i < results.length; i++){
