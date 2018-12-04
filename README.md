@@ -24,5 +24,9 @@ These instructions will give you a local repository on your machine which you ca
 ```
 git clone https://github.com/atulmishra-one/feature-request-app.git
 pip install -r requirements.txt
-python run.py
+export FLASK_APP=run.py
+
+flask run 
+
+http://localhost:5000
 ```
