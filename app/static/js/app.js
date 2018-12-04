@@ -1,5 +1,5 @@
 /**
-*@author atul mishra
+* @author atul mishra
 **/
 
 function ClientValue(data){
@@ -7,7 +7,7 @@ function ClientValue(data){
     this.name = ko.observable(data.name);
 }
 
-function AreaValue(data){
+function ProductValue(data){
     this.id = ko.observable(data.id);
     this.name = ko.observable(data.name);
 }
@@ -21,41 +21,26 @@ function featureAppModel(){
     self.selectedClient = ko.observable(1);
     self.priority = ko.observable(1);
     self.target_date = ko.observable(moment().format("YYYY-MM-DD"));
-    self.areaValues = ko.observableArray([]);
-    self.selectedArea = ko.observable(new AreaValue({"name": "Reports", "id": "Reports"}));
+    self.products = ko.observableArray([]);
+    self.selectedArea = ko.observable(new ProductValue({"name": "Reports", "id": "Reports"}));
+    self.features = ko.observableArray([]).extend({ paged: { pageSize: 6 } });
 
-    $.getJSON('/api/client_values', function(values){
+    $.getJSON('/api/clients', function(values){
         var results = $.map(values, function(value){
             return new ClientValue(value);
         });
         self.clientValues(results);
     });
 
-    $.getJSON('/api/areas_values', function(values){
+    $.getJSON('/api/products', function(values){
         var results = $.map(values, function(value){
-            return new AreaValue(value);
+            return new ProductValue(value);
         });
-        self.areaValues(results);
+        self.products(results);
     });
 
     $.getJSON('/api/list_features', function(results){
-          var table = '';
-          if( results.length > 0 ){
-            for(i=0; i < results.length; i++){
-                table += "<tr><td>"+results[i].title+"</td>\
-                <td>"+results[i].description+"</td><td>"+results[i].client+"</td><td>"+results[i].priority+"</td>\
-                <td>"+results[i].target_date+"</td><td>"+results[i].product_area+"</td><td>\
-                <button class='btn btn-danger delete' id="+results[i].id+">Remove</button></td></tr>";
-            }
-          }else{
-             table = '<tr><td colspan="6" align="middle">\
-             No feature has been submitted. Click the add button to add a new feature.</td></tr>';
-          }
-          $('#feature_content').append(table);
-    });
-
-    $(document).on('click', '.btn.btn-danger.delete', function(event){
-        self.deleteFeature(event.currentTarget.id, this);
+        self.features(results);
     });
 
     self.create = function(formElement){
@@ -82,7 +67,8 @@ function featureAppModel(){
         });
     };
 
-    self.deleteFeature = function(id, row){
+
+    deleteFeature = function(id, event, data){
         if( ! confirm("Are you sure, you want to delete this feature.")){
             return false;
         }
@@ -93,10 +79,29 @@ function featureAppModel(){
             type: 'DELETE',
             contentType: "application/json; charset=utf-8",
         }).done(function(response){
-            row.closest('tr').remove();
+            self.features.remove(function(feature){
+                return feature.id == id
+            });
         }).fail(function(xhr){
             alert(xhr.message);
         });
+    };
+
+    self.sortByTitle = function() {
+        self.features.sort(function(a, b) {
+            return a.title < b.title ? -1 : 1;
+        });
+    };
+
+    self.sortByPriority = function() {
+        self.features.sort(function(a, b) {
+            return a.priority < b.priority ? -1 : 1;
+        });
+    };
+
+    // Pagination
+    self.setPage = function(newPage) {
+        self.chars.pageNumber(newPage);
     };
 
 }
