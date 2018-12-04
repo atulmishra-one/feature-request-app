@@ -8,21 +8,43 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="table-responsive">
-                <table class="table ">
+                <table class="table">
                     <thead>
                         <tr>
-                          <th scope="col">Title</th>
+                          <th scope="col" data-bind="click: sortByTitle">Title &nbsp; <i class="fas fa-sort"></i></th>
                           <th scope="col">Description</th>
                           <th scope="col">Client</th>
-                          <th scope="col">Priority</th>
+                          <th scope="col" data-bind="click: sortByPriority">Priority &nbsp; <i class="fas fa-sort"></i></th>
                           <th scope="col">Target Date</th>
                           <th scope="col">Product Area</th>
                           <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody id="feature_content">
+                    <tbody id="feature_content" data-bind="foreach: features.pageItems">
+                        <tr>
+                            <td data-bind="text: title"></td>
+                            <td data-bind="text: description"></td>
+                            <td data-bind="text: client"></td>
+                            <td data-bind="text: priority"></td>
+                            <td data-bind="text: target_date"></td>
+                            <td data-bind="text: product"></td>
+                            <td data-bind="if: id">
+                                <button class="btn btn-danger" data-bind="click: function(data, event){ deleteFeature(id, data, event);}">Remove</button>
+                            </td>
+                        </tr>
                     </tbody>
+                    <tfoot data-bind="ifnot: features">
+                        <tr><td align="middle" colspan="7">No feature has been submitted yet.</td></tr>
+                    </tfoot>
                 </table>
+
+                <ul class="pagination mx-auto mt-5 w-75">
+                <!-- ko foreach: features.pages -->
+                  <li data-bind="css: { active: $data == $parent.features.pageNumber() }" class="page-item">
+                    <a class="page-link" href="#" data-bind="text: $data, click: $parent.features.pageNumber.bind($data)"></a>
+                  </li>
+                <!-- /ko -->
+                </ul>
             </div>
         </div>
     </div>
