@@ -72,6 +72,10 @@ def request_new_feature():
         description = data['description']
         product = data['product']
 
+        today = datetime.now()
+        if target_date < today:
+            abort(make_response(jsonify(message="Target date cannot be in past."), 400))
+
         Feature.reorder_priority(priority, client)  # Test and Re-Order Priority
         new_feature = Feature(
             title=title,
